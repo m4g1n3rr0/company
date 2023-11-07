@@ -9,26 +9,51 @@ import telran.company.dto.SalaryIntervalDistribution;
 public class CompanyServiceImpl implements CompanyService {
 
 	@Override
+	/*
+	 * adds new employee into a company
+	 * in the case an Employee with the given id already exists, 
+	 * the exception IllegalStateException must be thrown
+	 * returns reference to the being added Employee object 
+	 */
 	public Employee hireEmployee(Employee empl) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
+		
 	}
 
 	@Override
+	/*
+	 * removes Employee object from company according to a given ID
+	 * in the case an employee with the given ID does not exist
+	 * the method must throw IllegalStateException
+	 */
 	public Employee fireEmployee(long id) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
 	@Override
+	/*
+	 * returns reference to Employee object with a given ID value
+	 * in the case employee with the ID does not exist
+	 * the method returns null
+	 */
 	public Employee getEmployee(long id) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
 	@Override
+	/*
+	 * returns list of employee objects working in a given department
+	 * in the case none employees in the department, the method returns empty list
+	 */
 	public List<Employee> getEmployeesByDepartment(String department) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
