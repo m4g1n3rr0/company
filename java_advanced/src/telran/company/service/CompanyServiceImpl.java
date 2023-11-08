@@ -9,11 +9,20 @@ import telran.company.dto.SalaryIntervalDistribution;
 
 public class CompanyServiceImpl implements CompanyService {
 	
-	HashMap<Long, Employee> employeesMaps = new HashMap<>();
-	HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();  
-	TreeMap<Integer, Set<Employee>> employeeSalary = new TreeMap<>();
-	TreeMap<LocalDate, Set<Employee>> employeesAge = new TreeMap<>(); 
-
+	/***********************************************************/
+	HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();
+	//key - department, value- Set of employees working in the department
+	
+	/*************************************************************/
+	
+	TreeMap<Integer, Set<Employee>> employeesSalary = new TreeMap<>();
+	//key - salary, value - set of employees having the salary value
+	
+	/****************************************************************/
+	
+	TreeMap<LocalDate, Set<Employee>> employeesAge = new TreeMap<>();
+	//key birth date; value set of employees born at the
+	
 	@Override
 	/*
 	 * adds new employee into a company
@@ -46,7 +55,7 @@ public class CompanyServiceImpl implements CompanyService {
 	 * in the case employee with the ID does not exist
 	 * the method returns null
 	 */
-	public Employee getEmployee(long id) { //Method complexity:
+	public Employee getEmployee(long id) { //Method complexity: O[1]
 		
 		
 		return null;
@@ -57,42 +66,42 @@ public class CompanyServiceImpl implements CompanyService {
 	 * returns list of employee objects working in a given department
 	 * in the case none employees in the department, the method returns empty list
 	 */
-	public List<Employee> getEmployeesByDepartment(String department) { //Method complexity:
+	public List<Employee> getEmployeesByDepartment(String department) { //Method complexity: O[N]
 		
 		
 		return null;
 	}
 
 	@Override
-	public List<Employee> getAllEmployees() { //Method complexity:
+	public List<Employee> getAllEmployees() { //Method complexity: O[LogN]
 		
 		
 		return null;
 	}
 
 	@Override
-	public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) { //Method complexity:
+	public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) { //Method complexity: O[LogN]
 		
 		
 		return null;
 	}
 
 	@Override
-	public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) { //Method complexity:
+	public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) { //Method complexity: O[N]
 		
 		
 		return null;
 	}
 
 	@Override
-	public List<DepartmentAvgSalary> salaryDistributionByDepartments() { //Method complexity:
+	public List<DepartmentAvgSalary> salaryDistributionByDepartments() { //Method complexity: O[N]
 		
 		
 		return null;
 	}
 
 	@Override
-	public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) { //Method complexity:
+	public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) { //Method complexity: O[1}
 		
 		
 		return null;
