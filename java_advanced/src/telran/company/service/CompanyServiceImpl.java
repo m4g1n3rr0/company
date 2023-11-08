@@ -1,12 +1,18 @@
 package telran.company.service;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 import telran.company.dto.DepartmentAvgSalary;
 import telran.company.dto.Employee;
 import telran.company.dto.SalaryIntervalDistribution;
 
 public class CompanyServiceImpl implements CompanyService {
+	
+	HashMap<Long, Employee> employeesMaps = new HashMap<>();
+	HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();  
+	TreeMap<Integer, Set<Employee>> employeeSalary = new TreeMap<>();
+	TreeMap<LocalDate, Set<Employee>> employeesAge = new TreeMap<>(); 
 
 	@Override
 	/*
@@ -15,7 +21,7 @@ public class CompanyServiceImpl implements CompanyService {
 	 * the exception IllegalStateException must be thrown
 	 * returns reference to the being added Employee object 
 	 */
-	public Employee hireEmployee(Employee empl) {
+	public Employee hireEmployee(Employee empl) { //Method complexity: O[1]
 		
 		
 		return null;
@@ -28,7 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
 	 * in the case an employee with the given ID does not exist
 	 * the method must throw IllegalStateException
 	 */
-	public Employee fireEmployee(long id) {
+	public Employee fireEmployee(long id) { //Method complexity: O[1]
 		
 		
 		return null;
@@ -40,7 +46,7 @@ public class CompanyServiceImpl implements CompanyService {
 	 * in the case employee with the ID does not exist
 	 * the method returns null
 	 */
-	public Employee getEmployee(long id) {
+	public Employee getEmployee(long id) { //Method complexity:
 		
 		
 		return null;
@@ -51,63 +57,72 @@ public class CompanyServiceImpl implements CompanyService {
 	 * returns list of employee objects working in a given department
 	 * in the case none employees in the department, the method returns empty list
 	 */
-	public List<Employee> getEmployeesByDepartment(String department) {
+	public List<Employee> getEmployeesByDepartment(String department) { //Method complexity:
 		
 		
 		return null;
 	}
 
 	@Override
-	public List<Employee> getAllEmployees() {
-		// TODO Auto-generated method stub
+	public List<Employee> getAllEmployees() { //Method complexity:
+		
+		
 		return null;
 	}
 
 	@Override
-	public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) {
-		// TODO Auto-generated method stub
+	public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) { //Method complexity:
+		
+		
 		return null;
 	}
 
 	@Override
-	public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) {
-		// TODO Auto-generated method stub
+	public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) { //Method complexity:
+		
+		
 		return null;
 	}
 
 	@Override
-	public List<DepartmentAvgSalary> salaryDistributionByDepartments() {
-		// TODO Auto-generated method stub
+	public List<DepartmentAvgSalary> salaryDistributionByDepartments() { //Method complexity:
+		
+		
 		return null;
 	}
 
 	@Override
-	public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) {
-		// TODO Auto-generated method stub
+	public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) { //Method complexity:
+		
+		
 		return null;
 	}
 
 	@Override
-	public Employee updateDepartment(long id, String newDepartment) {
-		// TODO Auto-generated method stub
+	public Employee updateDepartment(long id, String newDepartment) { //Method complexity: O[1]
+		
+		
 		return null;
 	}
 
 	@Override
-	public Employee updateSalary(long id, int newSalary) {
-		// TODO Auto-generated method stub
+	public Employee updateSalary(long id, int newSalary) { //Method complexity: O[LogN]
+		
+		
 		return null;
 	}
 
 	@Override
-	public void save(String filePath) {
-		// TODO Auto-generated method stub
+	public void save(String filePath) { //Method complexity: O[N]
+		
+		
 		
 	}
 
 	@Override
-	public void restore(String filePath) {
-		// TODO Auto-generated method stub
+	public void restore(String filePath) { //Method complexity: O[N]
+		
+		
 		
 	}
 
