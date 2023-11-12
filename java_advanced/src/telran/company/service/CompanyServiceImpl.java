@@ -9,7 +9,10 @@ import telran.company.dto.SalaryIntervalDistribution;
 
 public class CompanyServiceImpl implements CompanyService {
 	
+	HashMap<Long, Employee> employeesMap = new HashMap<>();
+	
 	/***********************************************************/
+	
 	HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();
 	//key - department, value- Set of employees working in the department
 	
@@ -32,8 +35,48 @@ public class CompanyServiceImpl implements CompanyService {
 	 */
 	public Employee hireEmployee(Employee empl) { //Method complexity: O[1]
 		
+		long id = empl.id();
 		
-		return null;
+		if (employeesMap.containsKey(id) ) {
+			
+			throw new IllegalStateException("Employee already exists" + id);
+			
+		}
+		
+		employeesMap.put(id, empl);
+		
+		addEmployeeSalary(empl);
+		addEmployeeDepartment(empl);
+		addEmployeeAge(empl);
+		
+		return empl;
+		
+	}
+
+	private void addEmployeeAge(Employee empl) {
+
+		int age = empl.salary();
+		
+		Set<Employee> set = employeesSalary.computeIfAbsent(age, v -> new HashSet<>());
+		set.add(empl);
+		
+	}
+
+	private void addEmployeeDepartment(Employee empl) {
+
+		int department = empl.salary();
+		
+		Set<Employee> set = employeesSalary.computeIfAbsent(department, v -> new HashSet<>());
+		set.add(empl);
+		
+	}
+
+	private void addEmployeeSalary(Employee empl) {
+		
+		int salary = empl.salary();
+		
+		Set<Employee> set = employeesSalary.computeIfAbsent(salary, v -> new HashSet<>());
+		set.add(empl);
 		
 	}
 
@@ -45,8 +88,60 @@ public class CompanyServiceImpl implements CompanyService {
 	 */
 	public Employee fireEmployee(long id) { //Method complexity: O[1]
 		
+		Employee empl = employeesMap.remove(id);
+		if (empl == null) {
+			
+			throw new IllegalStateException("Employee not found" + id);
+			
+		}
 		
-		return null;
+		removeEmployeesDepartment(empl);
+		removeEmployeesSalary(empl);
+		removeEmployeesAge(empl);
+		
+		return empl;
+	}
+
+	private void removeEmployeesAge(Employee empl) {
+		
+		LocalDate birthDate = empl.birthDate();
+		Set<Employee> set = employeesAge.get(birthDate);
+		set.remove(empl); //removing reference to being removed employee from the set of employees with the given birth date
+		
+		if (set.isEmpty()) {
+			
+			employeesAge.remove(birthDate);
+			
+		}
+		
+	}
+
+	private void removeEmployeesSalary(Employee empl) {
+		
+		int salary = empl.salary();
+		Set<Employee> set = employeesSalary.get(salary);
+		set.remove(empl);
+
+		if (set.isEmpty()) {
+			
+			employeesSalary.remove(salary);
+			
+		}
+		
+	}
+
+	private void removeEmployeesDepartment(Employee empl) {
+		
+		String department = empl.department();
+		Set<Employee> set = employeesDepartment.get(department);
+		set.remove(empl);
+
+		if (set.isEmpty()) {
+			
+			employeesDepartment.remove(department);
+			
+		}
+		
 	}
 
 	@Override
@@ -58,7 +153,8 @@ public class CompanyServiceImpl implements CompanyService {
 	public Employee getEmployee(long id) { //Method complexity: O[1]
 		
 		
-		return null;
+		return employeesMap.get(id);
+		
 	}
 
 	@Override
