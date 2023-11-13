@@ -55,18 +55,18 @@ public class CompanyServiceImpl implements CompanyService {
 
 	private void addEmployeeAge(Employee empl) {
 
-		int age = empl.salary();
-		
-		Set<Employee> set = employeesSalary.computeIfAbsent(age, v -> new HashSet<>());
+		LocalDate birthdate = empl.birthDate();
+		Set<Employee> set =
+				employeesAge.computeIfAbsent(birthdate, k -> new HashSet<>());
 		set.add(empl);
 		
 	}
 
 	private void addEmployeeDepartment(Employee empl) {
 
-		int department = empl.salary();
+		String department = empl.department();
 		
-		Set<Employee> set = employeesSalary.computeIfAbsent(department, v -> new HashSet<>());
+		Set<Employee> set = employeesDepartment.computeIfAbsent(department, v -> new HashSet<>());
 		set.add(empl);
 		
 	}
@@ -164,29 +164,59 @@ public class CompanyServiceImpl implements CompanyService {
 	 */
 	public List<Employee> getEmployeesByDepartment(String department) { //Method complexity: O[N]
 		
+		//in the case no employees in the given department the empty collection should be returned
 		
-		return null;
+		Set<Employee> setEmployeesDep = employeesDepartment.getOrDefault(department, new HashSet<>());
+		
+		return new ArrayList<>(setEmployeesDep);
+		
 	}
 
 	@Override
 	public List<Employee> getAllEmployees() { //Method complexity: O[LogN]
 		
 		
-		return null;
+		return new ArrayList<>(employeesMap.values());
+		
 	}
 
 	@Override
 	public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) { //Method complexity: O[LogN]
 		
+		Collection<Set<Employee>> col = employeesSalary.subMap(salaryFrom, salaryTo).values();
+		ArrayList<Employee> res = new ArrayList<>();
 		
-		return null;
+		for (Set<Employee> set: col) {
+			
+			res.addAll(set);
+			
+		}
+		
+		return res;
+		
 	}
 
 	@Override
 	public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) { //Method complexity: O[N]
 		
+		LocalDate DateFrom = getBirthDate(ageTo);
+		LocalDate DateTo = getBirthDate(ageFrom);
+		Collection<Set<Employee>> col = employeesAge.subMap(DateFrom, DateTo).values();
+		ArrayList<Employee> res = new ArrayList<>();
+	
+		for (Set<Employee> set: col) {
+			
+			res.addAll(set);
+			
+		}
 		
-		return null;
+		return res;
+		
+	}
+
+	private LocalDate getBirthDate(int age) {
+		
+		return LocalDate.now().minusYears(age);
 	}
 
 	@Override
@@ -194,27 +224,35 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		
 		return null;
+		
 	}
 
 	@Override
-	public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) { //Method complexity: O[1}
+	public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) { //Method complexity: O[1]
 		
 		
 		return null;
+		
 	}
 
 	@Override
 	public Employee updateDepartment(long id, String newDepartment) { //Method complexity: O[1]
 		
+		Employee empl = fireEmployee(id);
+		Employee newEmployee = new Employee(id, empl.name(), empl.salary(), newDepartment, empl.birthDate());
 		
-		return null;
+		return hireEmployee(newEmployee);
+		
 	}
 
 	@Override
 	public Employee updateSalary(long id, int newSalary) { //Method complexity: O[LogN]
 		
+		Employee empl = fireEmployee(id);
+		Employee newEmployee = new Employee(id, empl.name(), newSalary, empl.department(), empl.birthDate());
 		
-		return null;
+		return hireEmployee(newEmployee);
+		
 	}
 
 	@Override

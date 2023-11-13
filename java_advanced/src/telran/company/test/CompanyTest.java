@@ -159,7 +159,7 @@ class CompanyTest {
 		
 		runListTest(employees, company.getEmployeesBySalary(0, Integer.MAX_VALUE));
 		runListTest(new Employee[0], company.getEmployeesBySalary(1000000000, Integer.MAX_VALUE));
-		runListTest(new Employee[] {empl1, empl2}, company.getEmployeesBySalary(SALARY1, SALARY2));
+		runListTest(new Employee[] {empl1, empl2}, company.getEmployeesBySalary(SALARY1, SALARY3));
 		
 	}
 
