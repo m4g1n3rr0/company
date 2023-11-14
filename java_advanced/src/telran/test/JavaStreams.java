@@ -3,18 +3,22 @@ package telran.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class JavaStreams {
+	
+	int[] arr = {10, 13, 8, 7, 3, 5 , 6};
 
 	@Test
 	@Disabled
 	void arrayStreamTest() {
 		//computing sum of the even numbers
-		int[] arr = {10, 13, 8, 7, 3, 5 , 6};
 		int [] empty = {};
 		assertEquals(24, Arrays.stream(arr)
 				.filter(n -> n % 2 == 0)
@@ -28,6 +32,7 @@ class JavaStreams {
 	}
 	
 	@Test
+	@Disabled
 	void displaySportloto() {
 		Random gen = new Random();
 		gen.ints(7, 1, 50)
@@ -35,7 +40,13 @@ class JavaStreams {
 		.forEach(n -> System.out.print(n + " "));
 	}
 	
-	
+	@Test
+	void evenOddGrouping() {
+		
+		Map<String, List<Integer>> mapOddEven = Arrays.stream(arr).boxed().collect(Collectors.groupingBy(n -> n % 2 == 0 ? "even" : "odd"));
+		System.out.println(mapOddEven);
+		
+	}
 
 }
 
