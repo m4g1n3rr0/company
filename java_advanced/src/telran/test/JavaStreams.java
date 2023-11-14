@@ -18,7 +18,9 @@ class JavaStreams {
 	@Test
 	@Disabled
 	void arrayStreamTest() {
+		
 		//computing sum of the even numbers
+		
 		int [] empty = {};
 		assertEquals(24, Arrays.stream(arr)
 				.filter(n -> n % 2 == 0)
@@ -29,22 +31,49 @@ class JavaStreams {
 		assertEquals(13, Arrays.stream(arr)
 				.filter(n -> n % 2 != 0)
 				.max().orElse(0));
+	
 	}
 	
 	@Test
 	@Disabled
 	void displaySportloto() {
+		
 		Random gen = new Random();
-		gen.ints(7, 1, 50)
-		.distinct()
-		.forEach(n -> System.out.print(n + " "));
+		gen.ints(7, 1, 50).distinct().forEach(n -> System.out.print(n + " "));
+	
 	}
 	
 	@Test
+	@Disabled
 	void evenOddGrouping() {
 		
 		Map<String, List<Integer>> mapOddEven = Arrays.stream(arr).boxed().collect(Collectors.groupingBy(n -> n % 2 == 0 ? "even" : "odd"));
 		System.out.println(mapOddEven);
+		
+	}
+	
+	@Test
+	@Disabled
+	void displayOccurenceSorted() {
+		
+		String[] strings = {"lpm", "y", "a", "lpm", "aa", "yy", "yy", "aa", "lpm"};
+		Map<String, Long> occurancesMap = Arrays.stream(strings).collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+		occurancesMap.entrySet().stream().sorted((e1, e2) -> {
+			int res = Long.compare(e2.getValue(), e1.getValue());
+			if (res == 0) {res = e1.getKey().compareTo(e2.getKey());}
+			return res;
+		}).forEach(e -> System.out.printf("$s => %d\n", e.getKey(), e.getValue()));
+		
+	}
+	
+	@Test
+	void stringStream() {
+		
+		String string = "Hello";
+		
+		//string.chars().forEach(c -> System.out.printf("%c,", c));
+		
+		string.chars().mapToObj(c -> "" + (char)c).forEach(s -> System.out.printf(s + ","));
 		
 	}
 
