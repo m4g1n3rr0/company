@@ -22,15 +22,9 @@ class JavaStreams {
 		//computing sum of the even numbers
 		
 		int [] empty = {};
-		assertEquals(24, Arrays.stream(arr)
-				.filter(n -> n % 2 == 0)
-				.sum());
-		assertEquals(0, Arrays.stream(empty)
-				.filter(n -> n % 2 != 0)
-				.max().orElse(0));
-		assertEquals(13, Arrays.stream(arr)
-				.filter(n -> n % 2 != 0)
-				.max().orElse(0));
+		assertEquals(24, Arrays.stream(arr).filter(n -> n % 2 == 0).sum());
+		assertEquals(0, Arrays.stream(empty).filter(n -> n % 2 != 0).max().orElse(0));
+		assertEquals(13, Arrays.stream(arr).filter(n -> n % 2 != 0).max().orElse(0));
 	
 	}
 	
