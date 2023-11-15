@@ -3,6 +3,7 @@ package telran.company.service;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.io.*;
 
 import telran.company.dto.DepartmentAvgSalary;
 import telran.company.dto.Employee;
@@ -232,8 +233,9 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) { //Method complexity: O[1]
 		
+		Map<Integer, Long> map = employeesMap.values().stream().collect(Collectors.groupingBy(e -> e.salary() / interval, Collectors.counting()));
 		
-		return null;
+		return map.entrySet().stream().sorted((e1, e2) -> Integer.compare(e1.getKey(), e2.getKey())).map(e -> new SalaryIntervalDistribution(e.getKey() * interval, e.getKey() * interval + interval, e.getValue())).toList();
 		
 	}
 
@@ -260,14 +262,46 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public void save(String filePath) { //Method complexity: O[N]
 		
+		try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filePath))) {
+			
+			output.writeObject(getAllEmployees());
+			
+		}
 		
+		catch (Exception e) {
+			
+			System.out.println(e.toString());
+			throw new RuntimeException(e);
+			
+		}
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void restore(String filePath) { //Method complexity: O[N]
 		
+		List<Employee> employees = null;
 		
+		try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filePath))) {
+				
+			employees = (List<Employee>) input.readObject();
+			employees.forEach(this::hireEmployee);
+			
+		}
+		
+		catch (FileNotFoundException e) {
+			
+			System.out.println(filePath + "File doesn't exist");
+			
+		}
+		
+		catch (Exception e) {
+			
+			System.out.println(e.toString());
+			throw new RuntimeException(e);
+			
+		}
 		
 	}
 
