@@ -91,6 +91,7 @@ public class CompanyServiceImpl implements CompanyService {
 	public Employee fireEmployee(long id) { //Method complexity: O[1]
 		
 		Employee empl = employeesMap.remove(id);
+		
 		if (empl == null) {
 			
 			throw new IllegalStateException("Employee not found" + id);
@@ -106,27 +107,24 @@ public class CompanyServiceImpl implements CompanyService {
 
 	private void removeEmployeesAge(Employee empl) {
 		
-		LocalDate birthDate = empl.birthDate();
-		Set<Employee> set = employeesAge.get(birthDate);
-		set.remove(empl); //removing reference to being removed employee from the set of employees with the given birth date
-		
-		if (set.isEmpty()) {
-			
-			employeesAge.remove(birthDate);
-			
-		}
+		removeFromMap(employeesAge, empl.birthDate(), empl);
 		
 	}
 
 	private void removeEmployeesSalary(Employee empl) {
 		
-		int salary = empl.salary();
-		Set<Employee> set = employeesSalary.get(salary);
+		removeFromMap(employeesSalary, empl.salary(), empl);
+		
+	}
+	
+	private <T> void removeFromMap(Map<T, Set<Employee>> map, T key, Employee empl) {
+		
+		Set<Employee> set = map.get(key); 
 		set.remove(empl);
-
+		
 		if (set.isEmpty()) {
 			
-			employeesSalary.remove(salary);
+			map.remove(key);
 			
 		}
 		
@@ -181,38 +179,28 @@ public class CompanyServiceImpl implements CompanyService {
 		return new ArrayList<>(employeesMap.values());
 		
 	}
+	
+	private <T> List<Employee> getEmployeesList(T from, T to, TreeMap<T, Set<Employee>> map) {
+		
+		Collection<Set<Employee>> col = map.subMap(from, to).values();
+		
+		return col.stream().flatMap(Collection::stream).toList();
+		
+	}
 
 	@Override
 	public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) { //Method complexity: O[LogN]
 		
-		Collection<Set<Employee>> col = employeesSalary.subMap(salaryFrom, salaryTo).values();
-		ArrayList<Employee> res = new ArrayList<>();
-		
-		for (Set<Employee> set: col) {
-			
-			res.addAll(set);
-			
-		}
-		
-		return res;
+		return getEmployeesList(salaryFrom, salaryTo, employeesSalary);
 		
 	}
 
 	@Override
 	public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) { //Method complexity: O[N]
 		
-		LocalDate DateFrom = getBirthDate(ageTo);
-		LocalDate DateTo = getBirthDate(ageFrom);
-		Collection<Set<Employee>> col = employeesAge.subMap(DateFrom, DateTo).values();
-		ArrayList<Employee> res = new ArrayList<>();
-	
-		for (Set<Employee> set: col) {
-			
-			res.addAll(set);
-			
-		}
-		
-		return res;
+		LocalDate dateFrom = getBirthDate(ageTo);
+		LocalDate dateTo = getBirthDate(ageFrom);
+		return getEmployeesList(dateFrom, dateTo, employeesAge);
 		
 	}
 
