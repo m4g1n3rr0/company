@@ -2,7 +2,7 @@ package telran.view;
 
 import java.util.function.Function;
 
-public interface inputOutput {
+public interface InputOutput {
 	
 	String readString(String promt);
 	void write(String str);
