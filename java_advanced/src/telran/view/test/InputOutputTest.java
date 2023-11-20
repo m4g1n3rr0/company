@@ -1,6 +1,6 @@
 package telran.view.test;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import telran.view.*;
 
 record Point(int x, int y) {
@@ -14,9 +14,10 @@ class InputOutputTest {
 	InputOutput io = new StandardInputOutput();
 	
 	@Test
+	@Disabled
 	void readPointTest() {
 		
-		Point point = io.readobject("Enter coordinates of point; usage <x>#<y>", 
+		Point point = io.readObject("Enter coordinates of point; usage <x>#<y>", 
 				"Wrong coordinates", str -> {
 					String[] xy = str.split("#");
 					if (xy.length != 2) {
@@ -27,7 +28,23 @@ class InputOutputTest {
 					return new Point(x, y);
 					});
 		
-		io.writeLine("" + point.x() + point.y());
+		io.writeLine(point.x() + point.y());
+		
+	}
+	
+	@Test
+	void readObjectTest() {
+		
+		Integer number = io.readObject("Enter number in range [100-200]", 
+				"Wrong number", str -> {
+					int num = Integer.parseInt(str);
+					if (num < 100 || num > 200) {
+						throw new RuntimeException("number cannot be less than 100 or bigger than 200");
+					}
+					return num;
+				});
+		
+		io.writeLine(number / 2);
 		
 	}
 
