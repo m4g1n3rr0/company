@@ -1,53 +1,54 @@
 package telran.view.test;
-
 import telran.view.*;
+import static telran.view.Item.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 public class DatesMenu {
-	
+
 	public static Item getMenu() {
-		
-		Menu menu = new Menu((Item[]) getItems(), "Dates Operations");
+	
+		Menu menu = new Menu(getItems(), "Dates Operations");
 		return menu;
-		
-	}
+}
+	
 
-	private static Object getItems() {
-		
+	private static Item[] getItems() {
 		Item[] items = {
-				
-			Item.of("Date after given days", io -> dateAfter(io)),
-			Item.of("Date after given days", io -> dateBefore(io)),
-			Item.of("Number days between two dates", io -> daysBetweenDates(io)),
-			exit()
-				
-		};
-		
+				of("Date after given days", io -> dateAfter(io)),
+				of("Date before given days", io -> dateBefore(io)),
+				of("Number days between two dates", io -> daysBetweenDates(io)),
+				exit()
+	};
+	
 		return items;
-		
+	
 	}
 
-	private static Item exit() {
-		
-		return null;
-		
-	}
+	private static void daysBetweenDates(InputOutput io) {
+	
+		LocalDate date1 = io.readDate("Enter first date in format YYYY-MM-DD", "Wrong date format");
+		LocalDate date2 = io.readDate("Enter second date in format YYYY-MM-DD", "Wrong date format");
+		io.writeLine(String.format("Number of days between %s and %s is %d days", date1, date2,
+			ChronoUnit.DAYS.between(date1, date2)));
+	
+}
 
-	private static Object daysBetweenDates(InputOutput io) {
-		
-		return null;
-		
-	}
+	private static void dateBefore(InputOutput io) {
+	
+		LocalDate date = io.readDate("Enter date in format YYYY-MM-DD", "Wrong date format");
+		int days = io.readInt("Enter number of days before the date " + date, "Wrong number of days");
+		io.writeLine(String.format("Date before %d days from date %s is %s", days, date,
+			date.minusDays(days)));
+	
+}
 
-	private static Object dateBefore(InputOutput io) {
-		
-		return null;
-		
-	}
+	private static void dateAfter(InputOutput io) {
+		LocalDate date = io.readDate("Enter date in format YYYY-MM-DD", "Wrong date format");
+		int days = io.readInt("Enter number of days after the date " + date, "Wrong number of days");
+		io.writeLine(String.format("Date after %d days from date %s is %s", days, date,
+			date.plusDays(days)));
 
-	private static Object dateAfter(InputOutput io) {
-		
-		return null;
-		
 	}
 	
 }
