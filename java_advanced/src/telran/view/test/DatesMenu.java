@@ -10,10 +10,12 @@ public class DatesMenu {
 	
 		Menu menu = new Menu(getItems(), "Dates Operations");
 		return menu;
+		
 }
 	
 
 	private static Item[] getItems() {
+		
 		Item[] items = {
 				of("Date after given days", io -> dateAfter(io)),
 				of("Date before given days", io -> dateBefore(io)),
@@ -44,6 +46,7 @@ public class DatesMenu {
 }
 
 	private static void dateAfter(InputOutput io) {
+	
 		LocalDate date = io.readDate("Enter date in format YYYY-MM-DD", "Wrong date format");
 		int days = io.readInt("Enter number of days after the date " + date, "Wrong number of days");
 		io.writeLine(String.format("Date after %d days from date %s is %s", days, date,
